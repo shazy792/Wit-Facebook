@@ -30,7 +30,6 @@ const actions = {
 
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to from context
-    // TODO: need to get Facebook user name
     const recipientId = context._fbid_;
     if (recipientId) {
       // Yay, we found our recipient!
@@ -56,11 +55,14 @@ const actions = {
   },
   merge(sessionId, context, entities, message, cb) {
     // Retrieve the location entity and store it into a context field
-    const loc = firstEntityValue(entities, 'location');
-    if (loc) {
-      context.loc = loc; // store it in context
+    
+    // Don't need location now!
+    const name = firstEntityValue(entities, 'name');
+    if (name) {
+      context.name = name; // store it in context
     }
 
+    console.log('Context Reached')
     cb(context);
   },
 
@@ -69,10 +71,10 @@ const actions = {
   },
 
   // fetch-weather bot executes
-  ['fetch-weather'](sessionId, context, cb) {
+  ['getName'](sessionId, context, cb) {
     // Here should go the api call, e.g.:
     // context.forecast = apiCall(context.loc)
-    context.forecast = 'sunny';
+    context.nameVal = 'Shahzil Sheikh';
     cb(context);
   },
 };
