@@ -83,10 +83,17 @@ const actions = {
     cb(context);
   },
 
-  ['getSkills'](sessionId, context, cb) {
+  ['getQuestion'](sessionId, context, cb) {
     // Here should go the api call, e.g.:
     // context.forecast = apiCall(context.loc)
-    context.skillsVal = 'Lang1, Lang2, Lang3 and so on...';
+    context.questionVal = 'Lang1, Lang2, Lang3 and so on...';
+    cb(context);
+  },
+
+  ['ended'](sessionId, context, cb) {
+    // Here should go the api call, e.g.:
+    // context.forecast = apiCall(context.loc)
+    context.clear();
     cb(context);
   },
 };
