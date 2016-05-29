@@ -62,6 +62,11 @@ const actions = {
       context.name = name; // store it in context
     }
 
+    const skills = firstEntityValue(entities, 'skills');
+    if (skills) {
+      context.skills = skills; // store it in context
+    }
+
     console.log('Context Reached')
     cb(context);
   },
@@ -75,6 +80,13 @@ const actions = {
     // Here should go the api call, e.g.:
     // context.forecast = apiCall(context.loc)
     context.nameVal = 'Shahzil Sheikh';
+    cb(context);
+  },
+
+  ['getSkills'](sessionId, context, cb) {
+    // Here should go the api call, e.g.:
+    // context.forecast = apiCall(context.loc)
+    context.skillsVal = 'Lang1, Lang2, Lang3 and so on...';
     cb(context);
   },
 };
