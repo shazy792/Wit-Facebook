@@ -54,20 +54,7 @@ const actions = {
     }
   },
   merge(sessionId, context, entities, message, cb) {
-    // Retrieve the location entity and store it into a context field
-    
-    // Don't need location now!
-    const name = firstEntityValue(entities, 'name');
-    if (name) {
-      context.name = name; // store it in context
-    }
-
-    const skills = firstEntityValue(entities, 'skills');
-    if (skills) {
-      context.skills = skills; // store it in context
-    }
-
-    console.log('Context Reached')
+    // Retrieve the entities and store it into a context field
     cb(context);
   },
 
@@ -76,25 +63,11 @@ const actions = {
   },
 
   // fetch-weather bot executes
-  ['getName'](sessionId, context, cb) {
+  //['getName'](sessionId, context, cb) {
     // Here should go the api call, e.g.:
     // context.forecast = apiCall(context.loc)
-    context.nameVal = 'Shahzil Sheikh';
-    cb(context);
-  },
-
-  ['getQuestion'](sessionId, context, cb) {
-    // Here should go the api call, e.g.:
-    // context.forecast = apiCall(context.loc)
-    context.questionVal = 'Lang1, Lang2, Lang3 and so on...';
-    cb(context);
-  },
-
-  ['ended'](sessionId, context, cb) {
-    // Here should go the api call, e.g.:
-    // context.forecast = apiCall(context.loc)
-    context.clear();
-    cb(context);
+    //context.nameVal = 'Shahzil Sheikh';
+    //cb(context);
   },
 };
 
