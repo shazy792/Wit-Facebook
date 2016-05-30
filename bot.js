@@ -66,7 +66,10 @@ const actions = {
   ['getName'](sessionId, context, cb) {
     // Here should go the api call, e.g.:
     // context.forecast = apiCall(context.loc)
-    context.name = 'Shahzil Sheikh';
+    if (context.intiation) {
+      context.name = 'Shahzil Sheikh';
+    }
+    
     cb(context);
   },
 
@@ -75,7 +78,7 @@ const actions = {
     // context.forecast = apiCall(context.loc)
     
     if (context.question == 'work') {
-      context.answer = 'I ahve worked here in this and here in this'
+      context.answer = 'I have worked here in this and here in this'
     } else if (context.question == 'education'){
       context.answer = 'Studying this at this uni'
     } else {
