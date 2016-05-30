@@ -62,12 +62,27 @@ const actions = {
     console.log(error.message);
   },
 
-  // fetch-weather bot executes
-  //['getName'](sessionId, context, cb) {
+  // Bot Executions
+  ['getName'](sessionId, context, cb) {
     // Here should go the api call, e.g.:
     // context.forecast = apiCall(context.loc)
-    //context.nameVal = 'Shahzil Sheikh';
-    //cb(context);
+    context.name = 'Shahzil Sheikh';
+    cb(context);
+  },
+
+  ['getAnswer'](sessionId, context, cb) {
+    // Here should go the api call, e.g.:
+    // context.forecast = apiCall(context.loc)
+    
+    if (context.question == 'work') {
+      context.answer = 'I ahve worked here in this and here in this'
+    } else if (context.question == 'education'){
+      context.answer = 'Studying this at this uni'
+    } else {
+      context.answer = "Sorry, I don't know this"
+    }
+
+    cb(context);
   },
 };
 
