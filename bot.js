@@ -55,6 +55,11 @@ const actions = {
   },
   merge(sessionId, context, entities, message, cb) {
     // Retrieve the entities and store it into a context field
+    const ques = firstEntityValue(entities, 'question');
+    if (ques) {
+      context.question = ques;
+    }
+
     cb(context);
   },
 
@@ -76,10 +81,11 @@ const actions = {
   ['getAnswer'](sessionId, context, cb) {
     // Here should go the api call, e.g.:
     // context.forecast = apiCall(context.loc)
-    
+    console.log(context.question)
+
     if (context.question == 'work') {
       context.answer = 'I have worked here in this and here in this'
-    } else if (context.question == 'education'){
+    } else if (context.question == 'school'){
       context.answer = 'Studying this at this uni'
     } else {
       context.answer = "Sorry, I don't know this"
