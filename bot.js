@@ -83,7 +83,7 @@ const actions = {
     // context.forecast = apiCall(context.loc)
     console.log(context.question)
 
-    if (context..question == "school"){
+    if (context.question == "school"){
       context.answer  = 'I am currently a 2019 canditate for Bachelors in\
          Electrical Engineering at the Illinois Institute of Technology'
     } else if (context.question == "work"){
@@ -96,7 +96,7 @@ const actions = {
        } else if (context.question == "projects"){
         context.answer = 'I have developed a Home Automation System as a Hobby Project.\
         I also have built robots for my classes and am currently pursuing a Robotic Arm project with IEEE'
-       } else if (context.question == 'question'){
+       } else if (context.question == "question"){
         context.answer = 'You can contact me at shazy792@gmail.com'
       } else{
         context.answer = 'Sorry I do not understand please contact Shahzil at shazy792@gmail.com for further details.'
