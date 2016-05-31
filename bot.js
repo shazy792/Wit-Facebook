@@ -84,23 +84,29 @@ const actions = {
     console.log(context.question)
 
     switch(context.question){
-      case 'School'||'school':
+      case 'School':
+      case 'school':
         context.answer  = 'I am currently a 2019 canditate for Bachelors in\
          Electrical Engineering at the Illinois Institute of Technology'
-      case 'Work'||'work':
+      case 'Work':
+      case 'work':
         context.answer = 'Currently I am working as a Student Assistant at the\
          Student Employement Office at the Illionois Institute of Technology. From 2012 to 2015 I have Interned at KeySports Pvt Ltd\
          and in the Summer of 2014 I Interned at the Standard Chartered Bank'
-      case 'Skills'||'skills':
+      case 'Skills':
+      case 'skills':
         context.answer = 'I currently program in Java, Python, Visual Basic and Arduino\
         I am also comfortabble with various electroinc boards including Arduino, Raspberry Pi and ESP8266'
-      case 'Achievements'||'achievements':
+      case 'Achievements':
+      case 'achievements':
         context.answer = 'I have been on the Deans list at my university in Fall 2015 and Spring 2016.\
         I have also won the CS2050 Hackathon at my university'
-      case 'Projects'||'projects':
+      case 'Projects':
+      case 'projects':
         context.answer = 'I have developed a Home Automation System as a Hobby Project.\
         I also have built robots for my classes and am currently pursuing a Robotic Arm project with IEEE'
-      case 'Contact'||'contact':
+      case 'Contact':
+      case 'contact':
         context.answer = 'You can contact me at shazy792@gmail.com'
       default:
         context.answer = 'Sorry I do not understand please contact Shazhil at shazy792@gmail.com for further details.'
