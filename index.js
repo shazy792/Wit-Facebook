@@ -22,7 +22,7 @@ app.get('/', function (req, res) {
 
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
-    if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
+    if (req.query['hub.verify_token'] === 'shazy792resumebot') {
         res.send(req.query['hub.challenge'])
     }
     res.send('Error, wrong token')
@@ -33,11 +33,6 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
-// index. Let's say something fun
-app.get('/', function(req, res) {
-  res.send('"Only those who will risk going too far can possibly find out how far one can go." - T.S. Eliot');
-});
-
  app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
@@ -45,15 +40,15 @@ app.get('/', function(req, res) {
       let sender = event.sender.id
       if (event.message && event.message.text) {
         let text = event.message.text
-        if (text === 'Generic') {
+        if (text === 'Yolo') {
             sendGenericMessage(sender)
             continue
         }
-        sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+        //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
       }
       if (event.postback) {
         let text = JSON.stringify(event.postback)
-        sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+        sendTextMessage(sender, "Postback received: Yolo"+text.substring(0, 200), token)
         continue
       }
     }
@@ -88,13 +83,13 @@ function sendGenericMessage(sender) {
             "payload": {
                 "template_type": "generic",
                 "elements": [{
-                    "title": "First card",
-                    "subtitle": "Element #1 of an hscroll",
+                    "title": "Education",
+                    "subtitle": "University",
                     "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                     "buttons": [{
                         "type": "web_url",
                         "url": "https://www.messenger.com",
-                        "title": "web url"
+                        "title": "Learn More"
                     }, {
                         "type": "postback",
                         "title": "Postback",
