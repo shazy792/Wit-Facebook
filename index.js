@@ -1,60 +1,37 @@
 'use strict';
 
-// Messenger API integration example
-// We assume you have:
-// * a Wit.ai bot setup (https://wit.ai/docs/quickstart)
-// * a Messenger Platform setup (https://developers.facebook.com/docs/messenger-platform/quickstart)
-// You need to `npm install` the following dependencies: body-parser, express, request.
-//
-const bodyParser = require('body-parser');
-const express = require('express');
+'use strict'
 
-// get Bot, const, and Facebook API
-const bot = require('./bot.js');
-const Config = require('./const.js');
-const FB = require('./facebook.js');
+const express = require('express')
+const bodyParser = require('body-parser')
+const request = require('request')
+const app = express()
 
-// Setting up our bot
-//const wit = bot.getWit();
+app.set('port', (process.env.PORT || 5000))
 
-// Webserver parameter
-const PORT = process.env.PORT || 8445;
+// Process application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: false}))
 
-// Wit.ai bot specific code
+// Process application/json
+app.use(bodyParser.json())
 
-// This will contain all user sessions.
-// Each session has an entry:
-// sessionId -> {fbid: facebookUserId, context: sessionState}
-const sessions = {};
+// Index route
+app.get('/', function (req, res) {
+    res.send('Hello world, I am a chat bot')
+})
 
-const findOrCreateSession = (fbid) => {
-  let sessionId;
-  // Let's see if we already have a session for the user fbid
-  Object.keys(sessions).forEach(k => {
-    if (sessions[k].fbid === fbid) {
-      // Yep, got it!
-      sessionId = k;
+// for Facebook verification
+app.get('/webhook/', function (req, res) {
+    if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
+        res.send(req.query['hub.challenge'])
     }
-  });
-  if (!sessionId) {
-    // No session found for user fbid, let's create a new one
-    sessionId = new Date().toISOString();
-    sessions[sessionId] = {
-      fbid: fbid,
-      context: {
-        _fbid_: fbid
-      }
-    }; // set context, _fid_
-  }
-  return sessionId;
-};
+    res.send('Error, wrong token')
+})
 
-// Starting our webserver and putting it all together
-const app = express();
-app.set('port', PORT);
-app.listen(app.get('port'));
-app.use(bodyParser.json());
-console.log("I'm wating for you @" + PORT);
+// Spin up the server
+app.listen(app.get('port'), function() {
+    console.log('running on port', app.get('port'))
+})
 
 // index. Let's say something fun
 app.get('/', function(req, res) {
