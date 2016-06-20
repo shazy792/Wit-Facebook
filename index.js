@@ -84,11 +84,11 @@ function sendGenericMessage(sender) {
                 "template_type": "generic",
                 "elements": [{
                     "title": "Education",
-                    "subtitle": "University",
-                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "subtitle": "Electrical Engineering at Illinois Institute of Technology",
+                    //"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                     "buttons": [{
                         "type": "web_url",
-                        "url": "https://www.messenger.com",
+                        "url": "www.shazy792.com",
                         "title": "Learn More"
                     }, {
                         "type": "postback",
