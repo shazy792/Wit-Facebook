@@ -48,7 +48,7 @@ app.listen(app.get('port'), function() {
       }
       if (event.postback) {
         let text = JSON.stringify(event.postback)
-        sendTextMessage(sender, "Postback received: Yolo"+text.substring(0, 200), token)
+        sendTextMessage(sender, "Recieved Post Back Call Payload= "+text, token)
         continue
       }
     }
