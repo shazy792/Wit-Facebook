@@ -51,7 +51,7 @@ app.listen(app.get('port'), function() {
         //let text = JSON.stringify(event.postback)
         //sendTextMessage(sender, "Recieved Post Back Call Payload= "+text["payload"]+event.postback["payload"], token)
         sendTextMessage(sender, "Recieved Post Back Call Payload= "+event.postback["payload"], token);
-        postbackHandler(event.postback)
+        postbackHandler(sender, token, event.postback)
         continue
       }
     }
@@ -128,7 +128,7 @@ function sendGenericMessage(sender) {
     })
 }
 
-function postbackHandler(postback){
+function postbackHandler(sender, token, postback){
 	switch (postback["payload"]){
 
 		case 'hello':
