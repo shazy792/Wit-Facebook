@@ -47,8 +47,11 @@ app.listen(app.get('port'), function() {
         //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
       }
       if (event.postback) {
-        let text = JSON.stringify(event.postback)
-        sendTextMessage(sender, "Recieved Post Back Call Payload= "+text["payload"]+event.postback["payload"], token)
+        // No need to stringify since getting payload by JSON!
+        //let text = JSON.stringify(event.postback)
+        //sendTextMessage(sender, "Recieved Post Back Call Payload= "+text["payload"]+event.postback["payload"], token)
+        sendTextMessage(sender, "Recieved Post Back Call Payload= "+event.postback["payload"], token);
+        postbackHandler(event.postback)
         continue
       }
     }
@@ -123,4 +126,13 @@ function sendGenericMessage(sender) {
             console.log('Error: ', response.body.error)
         }
     })
+}
+
+function postbackHandler(postback){
+	switch (postback["payload"]){
+
+		case 'hello':
+			sendTextMessage(sender, "Hello!", token)
+	}
+
 }
