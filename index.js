@@ -85,7 +85,7 @@ function sendGenericMessage(sender) {
             "type": "template",
             "payload": {
                 "template_type": "button",
-                "elements": [{
+                //"elements": [{
                     "text": "Whoa.....!",
                     //"subtitle": "Electrical Engineering at Illinois Institute of Technology",
                     //"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
@@ -107,7 +107,7 @@ function sendGenericMessage(sender) {
                 //         "title": "Postback",
                 //         "payload": "Payload for second element in a generic bubble",
                 //     }],
-                }]
+                //}]
             }
         }
     }
