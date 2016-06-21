@@ -48,7 +48,7 @@ app.listen(app.get('port'), function() {
       }
       if (event.postback) {
         let text = JSON.stringify(event.postback)
-        sendTextMessage(sender, "Recieved Post Back Call Payload= "+text['payload'], token)
+        sendTextMessage(sender, "Recieved Post Back Call Payload= "+text["payload"]+event.postback["payload"], token)
         continue
       }
     }
