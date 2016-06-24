@@ -95,8 +95,8 @@ function sendGenericMessage(sender) {
                         "title": "Learn More"
                     }, {
                         "type": "postback",
-                        "title": "Postback",
-                        "payload": "hello",
+                        "title": "Education",
+                        "payload": "Education",
                     }],
                 // }, {
                 //     "title": "Second card",
