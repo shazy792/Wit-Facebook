@@ -41,7 +41,7 @@ app.listen(app.get('port'), function() {
       if (event.message && event.message.text) {
         let text = event.message.text
         if (text === 'Yolo') {
-            sendGenericMessage(sender)
+            sendGenericMessage(sender) // Call to Button Message.
             continue
         }
         //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -50,7 +50,7 @@ app.listen(app.get('port'), function() {
         // No need to stringify since getting payload by JSON!
         //let text = JSON.stringify(event.postback)
         //sendTextMessage(sender, "Recieved Post Back Call Payload= "+text["payload"]+event.postback["payload"], token)
-        sendTextMessage(sender, "Recieved Post Back Call Payload= "+event.postback["payload"], token);
+        //sendTextMessage(sender, "Recieved Post Back Call Payload= "+event.postback["payload"], token);
         postbackHandler(sender, token, event.postback)
         continue
       }
@@ -128,11 +128,63 @@ function sendGenericMessage(sender) {
     })
 }
 
+function sendCardMessage(sender) {
+    let messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "text": "Whoa.....!",
+                    "subtitle": "Electrical Engineering at Illinois Institute of Technology",
+                    //"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "buttons": [{
+                        "type": "web_url",
+                        "url": "www.shazy792.com",
+                        "title": "Learn More"
+                    }, {
+                        "type": "postback",
+                        "title": "Postback",
+                        "payload": "hello",
+                    }],
+                }, {
+                    "title": "Second card",
+                    "subtitle": "Element #2 of an hscroll",
+                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "buttons": [{
+                        "type": "postback",
+                        "title": "Postback",
+                        "payload": "Payload for second element in a generic bubble",
+                    }],
+                }]
+            }
+        }
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+
 function postbackHandler(sender, token, postback){
 	switch (postback["payload"]){
 
 		case 'hello':
 			sendTextMessage(sender, "Hello!", token)
+		case 'Education':
+			sendCardMessage(sender)
 	}
 
 }
