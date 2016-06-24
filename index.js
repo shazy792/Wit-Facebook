@@ -135,7 +135,7 @@ function sendCardMessage(sender) {
             "payload": {
                 "template_type": "generic",
                 "elements": [{
-                    "text": "Whoa.....!",
+                    "title": "Education",
                     "subtitle": "Electrical Engineering at Illinois Institute of Technology",
                     //"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                     "buttons": [{
