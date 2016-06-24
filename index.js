@@ -40,7 +40,7 @@ app.listen(app.get('port'), function() {
       let sender = event.sender.id
       if (event.message && event.message.text) {
         let text = event.message.text
-        if (text === 'Yolo') {
+        if (text) {
             sendGenericMessage(sender) // Call to Button Message.
             continue
         }
@@ -60,6 +60,7 @@ app.listen(app.get('port'), function() {
 
 const token = process.env.FB_PAGE_TOKEN;
 
+// Text Message
 function sendTextMessage(sender, text) {
     let messageData = { text:text }
     request({
@@ -79,16 +80,14 @@ function sendTextMessage(sender, text) {
     })
 }
 
+// Text with Buttons
 function sendGenericMessage(sender) {
     let messageData = {
         "attachment": {
             "type": "template",
             "payload": {
                 "template_type": "button",
-                //"elements": [{
                     "text": "Whoa.....!",
-                    //"subtitle": "Electrical Engineering at Illinois Institute of Technology",
-                    //"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                     "buttons": [{
                         "type": "web_url",
                         "url": "www.shazy792.com",
@@ -98,16 +97,6 @@ function sendGenericMessage(sender) {
                         "title": "Education",
                         "payload": "Education",
                     }],
-                // }, {
-                //     "title": "Second card",
-                //     "subtitle": "Element #2 of an hscroll",
-                //     "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
-                //     "buttons": [{
-                //         "type": "postback",
-                //         "title": "Postback",
-                //         "payload": "Payload for second element in a generic bubble",
-                //     }],
-                //}]
             }
         }
     }
@@ -128,6 +117,7 @@ function sendGenericMessage(sender) {
     })
 }
 
+// Card Message
 function sendCardMessage(sender) {
     let messageData = {
         "attachment": {
