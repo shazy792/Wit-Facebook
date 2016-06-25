@@ -69,15 +69,6 @@ function postbackHandler(sender, token, postback){
 		case 'Skills':
 			//Button
 			sendGenericMessage(messageSkills, sender)
-		case 'sx1':
-			//Card
-			sendCardMessage(messagePLangs, sender)
-		case 'sx2':
-			//Card
-			sendCardMessage(messageHBoards, sender)
-		case 'sx3':
-			//Card
-			sendCardMessage(messageDatabase, sender)
 		case 'Experience':
 			//Card
 		case 'Personal':
@@ -86,6 +77,12 @@ function postbackHandler(sender, token, postback){
 			//Card
 		case 'Achievements':
 			//Card
+		case 'sx1':
+			sendCardMessage(messagePLangs, sender)
+		case 'sx2':
+			sendCardMessage(messageHBoards, sender)
+		case 'sx3':
+			sendCardMessage(messageDatabase, sender)
 
 	}
 
