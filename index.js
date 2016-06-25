@@ -63,19 +63,20 @@ const token = process.env.FB_PAGE_TOKEN;
 function postbackHandler(sender, token, postback){
 	switch (postback["payload"]){
 
+		console.log(postback["payload"])
 		case 'Education':
 			//Card
 			sendCardMessage(messageEducation, sender)
 		case 'Skills':
 			//Button
 			sendGenericMessage(messageSkills, sender)
-		case 'PLangs':
+		case 'sx1':
 			//Card
 			sendCardMessage(messagePLangs, sender)
-		case 'HBoards':
+		case 'sx2':
 			//Card
 			sendCardMessage(messageHBoards, sender)
-		case 'Database':
+		case 'sx3':
 			//Card
 			sendCardMessage(messageDatabase, sender)
 		case 'Experience':
@@ -209,15 +210,15 @@ let messageSkills = {
                     "buttons": [{
                         "type": "postback",
                         "title": "Programming Languages",
-                        "payload": "PLangs"
+                        "payload": "sx1"
                     }, {
                         "type": "postback",
                         "title": "Hardware Boards",
-                        "payload": "HBoards",
+                        "payload": "sx2",
                     }, {
                         "type": "postback",
                         "title": "Database Engines",
-                        "payload": "Database",
+                        "payload": "sx3",
                     }],
             }
         }
