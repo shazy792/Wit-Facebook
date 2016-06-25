@@ -165,15 +165,11 @@ let messageEducation = {
                 "elements": [{
                     "title": "Electrical Engineering",
                     "subtitle": "2019 at Illinois Institute of Technology",
-                    "image_url": "https://www.royalcanin.com/~/media/Royal-Canin/Product-Categories/cat-adult-landing-hero.ashx",
+                    //"image_url": "https://www.royalcanin.com/~/media/Royal-Canin/Product-Categories/cat-adult-landing-hero.ashx",
                     "buttons": [{
                         "type": "web_url",
                         "url": "http://web.iit.edu/",
                         "title": "My University"
-                    }, {
-                        "type": "postback",
-                        "title": "Postback",
-                        "payload": "hello",
                     }],
                 }, {
                     "title": "A Levels",
@@ -182,7 +178,7 @@ let messageEducation = {
                     "buttons": [{
                         "type": "web_url",
                         "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/",
-                        "title": "My School"
+                        "title": "My School",
                     }],
                 }]
             }
