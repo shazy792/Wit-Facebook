@@ -74,10 +74,10 @@ function postbackHandler(sender, token, postback){
 			sendCardMessage(messagePLangs, sender)
 		case 'HBoards':
 			//Card
-			sendCardMessage(message, sender)
+			sendCardMessage(messageHBoards, sender)
 		case 'Database':
 			//Card
-			sendCardMessage(messageEducation, sender)
+			sendCardMessage(messageDatabase, sender)
 		case 'Experience':
 			//Card
 		case 'Personal':
