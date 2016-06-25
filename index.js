@@ -38,11 +38,11 @@ app.listen(app.get('port'), function() {
       let event = req.body.entry[0].messaging[i]
       let sender = event.sender.id
       if (event.message && event.message.text) {
-        let text = event.message.text
-        if (text == 'Yolo') {
+        //let text = event.message.text
+        //if (text == 'Yolo') {
             sendGenericMessage(messageSuggestions, sender) // Call to Button Message.
             continue
-        }
+        //}
         //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
       }
       if (event.postback) {
@@ -69,7 +69,16 @@ function postbackHandler(sender, token, postback){
 			break;
 		case 'Skills':
 			//Button
-			sendGenericMessage(messageSkills, sender)
+			sendButtonMessage(messageSkills, sender)
+			break;
+		case 'sx1':
+			sendCardMessage(messagePLangs, sender)
+			break;
+		case 'sx2':
+			sendCardMessage(messageHBoards, sender)
+			break;
+		case 'sx3':
+			sendCardMessage(messageDatabase, sender)
 			break;
 		case 'Experience':
 			//Card
@@ -83,16 +92,6 @@ function postbackHandler(sender, token, postback){
 		case 'Achievements':
 			//Card
 			break;
-		case 'sx1':
-			sendCardMessage(messagePLangs, sender)
-			break;
-		case 'sx2':
-			sendCardMessage(messageHBoards, sender)
-			break;
-		case 'sx3':
-			senCardMessage(messageDatabase, sender)
-			break;
-
 	}
 
 }
@@ -118,7 +117,7 @@ function sendTextMessage(sender, text) {
 }
 
 // Text with Buttons
-function sendGenericMessage(messageData, sender) {
+function sendButtonMessage(messageData, sender) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
