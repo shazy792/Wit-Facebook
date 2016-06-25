@@ -39,7 +39,7 @@ app.listen(app.get('port'), function() {
       let sender = event.sender.id
       if (event.message && event.message.text) {
         let text = event.message.text
-        if (text) {
+        if (text == 'Yolo') {
             sendGenericMessage(sender) // Call to Button Message.
             continue
         }
