@@ -108,15 +108,15 @@ function sendGenericMessage(sender) {
             "type": "template",
             "payload": {
                 "template_type": "button",
-                    "text": "Whoa.....!",
+                    "text": "What would you like to know about me?",
                     "buttons": [{
-                        "type": "web_url",
-                        "url": "www.shazy792.com",
-                        "title": "Learn More"
-                    }, {
                         "type": "postback",
                         "title": "Education",
-                        "payload": "Education",
+                        "payload": "Education123"
+                    }, {
+                        "type": "postback",
+                        "title": "Skills",
+                        "payload": "Skills",
                     }],
             }
         }
