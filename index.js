@@ -206,15 +206,15 @@ let messageSkills = {
                     "buttons": [{
                         "type": "postback",
                         "title": "Programming Languages",
-                        "payload": "sx1"
+                        "payload": "1"
                     }, {
                         "type": "postback",
                         "title": "Hardware Boards",
-                        "payload": "sx2",
+                        "payload": "2",
                     }, {
                         "type": "postback",
                         "title": "Database Engines",
-                        "payload": "sx3",
+                        "payload": "3",
                     }],
             }
         }
