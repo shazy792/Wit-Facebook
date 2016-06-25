@@ -68,6 +68,7 @@ function postbackHandler(sender, token, postback){
 			sendCardMessage(messageEducation, sender)
 		case 'Skills':
 			//Card
+			sendCardMessage(messageSkills, sender)
 		case 'Experience':
 			//Card
 		case 'Personal':
@@ -184,6 +185,43 @@ let messageEducation = {
                         "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/",
                         "title": "My School",
                     }],
+                }]
+            }
+        }
+    }
+
+let messageSkills = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Java",
+                    //"subtitle": "",
+                    //"image_url": "https://www.royalcanin.com/~/media/Royal-Canin/Product-Categories/cat-adult-landing-hero.ashx",
+                    /*"buttons": [{
+                        "type": "web_url",
+                        "url": "http://web.iit.edu/",
+                        "title": "My University"
+                    }],*/
+                }, {
+                    "title": "Python",
+                    //"subtitle": "2015 at The City Schools",
+                    //"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    /*"buttons": [{
+                        "type": "web_url",
+                        "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/",
+                        "title": "My School",
+                    }],*/
+                }, {
+                    "title": "Visual Basic .Net/6",
+                    //"subtitle": "2015 at The City Schools",
+                    //"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    /*"buttons": [{
+                        "type": "web_url",
+                        "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/",
+                        "title": "My School",
+                    }],*/
                 }]
             }
         }
