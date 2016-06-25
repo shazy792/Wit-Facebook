@@ -197,31 +197,16 @@ let messagePLangs = {
                 "template_type": "generic",
                 "elements": [{
                     "title": "Java",
-                    //"subtitle": "*****",
                     "image_url": "http://www.greycampus.com/system/courses/JAVA.jpg",
-                    /*"buttons": [{
-                        "type": "web_url",
-                        "url": "http://web.iit.edu/",
-                        "title": "My University"
-                    }],*/
+                   	"item_url": "https://en.wikipedia.org/wiki/Java_(programming_language)",
                 }, {
                     "title": "Python",
-                    //"subtitle": "*****",
                     "image_url": "https://realpython.com/learn/python-first-steps/images/pythonlogo.jpg",
-                    /*"buttons": [{
-                        "type": "web_url",
-                        "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/",
-                        "title": "My School",
-                    }],*/
+                    "item_url": "https://en.wikipedia.org/wiki/Python_(programming_language)",
                 }, {
                     "title": "Visual Basic .Net/6",
-                    //"subtitle": "*****",
                     "image_url": "https://regmedia.co.uk/2013/11/13/visual_studio.jpg?x=1200&y=794",
-                    /*"buttons": [{
-                        "type": "web_url",
-                        "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/",
-                        "title": "My School",
-                    }],*/
+                    "item_url": "https://en.wikipedia.org/wiki/Visual_Basic_.NET",
                 }]
             }
         }
