@@ -40,7 +40,7 @@ app.listen(app.get('port'), function() {
       if (event.message && event.message.text) {
         //let text = event.message.text
         //if (text == 'Yolo') {
-            sendGenericMessage(messageSuggestions, sender) // Call to Button Message.
+            sendButtonMessage(messageSuggestions, sender) // Call to Button Message.
             continue
         //}
         //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
