@@ -112,11 +112,15 @@ function sendGenericMessage(sender) {
                     "buttons": [{
                         "type": "postback",
                         "title": "Education",
-                        "payload": "Education123"
+                        "payload": "Education"
                     }, {
                         "type": "postback",
                         "title": "Skills",
                         "payload": "Skills",
+                    }, {
+                        "type": "postback",
+                        "title": "Experience",
+                        "payload": "Experience",
                     }],
             }
         }
