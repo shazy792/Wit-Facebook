@@ -61,9 +61,8 @@ const token = process.env.FB_PAGE_TOKEN;
 
 //Function to Handle Postback Calls
 function postbackHandler(sender, token, postback){
+	console.log(postback["payload"])
 	switch (postback["payload"]){
-
-		console.log(postback["payload"])
 		case 'Education':
 			//Card
 			sendCardMessage(messageEducation, sender)
