@@ -68,7 +68,7 @@ function postbackHandler(sender, token, postback){
 			sendCardMessage(messageEducation, sender)
 		case 'Skills':
 			//Card
-			sendCardMessage(messageSkills, sender)
+			sendCardMessage(messagePLangs, sender)
 		case 'Experience':
 			//Card
 		case 'Personal':
@@ -190,15 +190,15 @@ let messageEducation = {
         }
     }
 
-let messageSkills = {
+let messagePLangs = {
         "attachment": {
             "type": "template",
             "payload": {
                 "template_type": "generic",
                 "elements": [{
                     "title": "Java",
-                    "subtitle": "*****",
-                    //"image_url": "https://www.royalcanin.com/~/media/Royal-Canin/Product-Categories/cat-adult-landing-hero.ashx",
+                    //"subtitle": "*****",
+                    "image_url": "http://www.greycampus.com/system/courses/JAVA.jpg",
                     /*"buttons": [{
                         "type": "web_url",
                         "url": "http://web.iit.edu/",
@@ -206,8 +206,8 @@ let messageSkills = {
                     }],*/
                 }, {
                     "title": "Python",
-                    "subtitle": "*****",
-                    //"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    //"subtitle": "*****",
+                    "image_url": "https://realpython.com/learn/python-first-steps/images/pythonlogo.jpg",
                     /*"buttons": [{
                         "type": "web_url",
                         "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/",
@@ -215,8 +215,8 @@ let messageSkills = {
                     }],*/
                 }, {
                     "title": "Visual Basic .Net/6",
-                    "subtitle": "*****",
-                    //"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    //"subtitle": "*****",
+                    "image_url": "https://regmedia.co.uk/2013/11/13/visual_studio.jpg?x=1200&y=794",
                     /*"buttons": [{
                         "type": "web_url",
                         "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/",
