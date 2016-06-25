@@ -1,7 +1,5 @@
 'use strict';
 
-'use strict'
-
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
@@ -33,6 +31,7 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
+ // Webhook Postaback
  app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
@@ -59,6 +58,28 @@ app.listen(app.get('port'), function() {
   })
 
 const token = process.env.FB_PAGE_TOKEN;
+
+//Function to Handle Postback Calls
+function postbackHandler(sender, token, postback){
+	switch (postback["payload"]){
+
+		case 'Education':
+			//Card
+			sendCardMessage(messageEducation, sender)
+		case 'Skills':
+			//Card
+		case 'Experience':
+			//Card
+		case 'Personal':
+			//Card
+		case 'Projects':
+			//Card
+		case 'Achievements':
+			//Card
+
+	}
+
+}
 
 // Text Message
 function sendTextMessage(sender, text) {
@@ -118,38 +139,7 @@ function sendGenericMessage(sender) {
 }
 
 // Card Message
-function sendCardMessage(sender) {
-    let messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Education",
-                    "subtitle": "Electrical Engineering at Illinois Institute of Technology",
-                    //"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                    "buttons": [{
-                        "type": "web_url",
-                        "url": "www.shazy792.com",
-                        "title": "Learn More"
-                    }, {
-                        "type": "postback",
-                        "title": "Postback",
-                        "payload": "hello",
-                    }],
-                }, {
-                    "title": "Second card",
-                    "subtitle": "Element #2 of an hscroll",
-                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Postback",
-                        "payload": "Payload for second element in a generic bubble",
-                    }],
-                }]
-            }
-        }
-    }
+function sendCardMessage(messageData, sender) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
@@ -167,14 +157,35 @@ function sendCardMessage(sender) {
     })
 }
 
+let messageEducation = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Electrical Engineering",
+                    "subtitle": "2019 at Illinois Institute of Technology",
+                    //"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "buttons": [{
+                        "type": "web_url",
+                        "url": "http://web.iit.edu/",
+                        "title": "Illinois Institute of Technology"
+                    }, {
+                        "type": "postback",
+                        "title": "Postback",
+                        "payload": "hello",
+                    }],
+                }, {
+                    "title": "A Levels",
+                    "subtitle": "2015 at The City Schools",
+                    //"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "buttons": [{
+                        "type": "web_url",
+                        "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/"
+                        "title": "The City School",
+                    }],
+                }]
+            }
+        }
+    }
 
-function postbackHandler(sender, token, postback){
-	switch (postback["payload"]){
-
-		case 'hello':
-			sendTextMessage(sender, "Hello!", token)
-		case 'Education':
-			sendCardMessage(sender)
-	}
-
-}
