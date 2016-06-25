@@ -197,7 +197,7 @@ let messageSkills = {
                 "template_type": "generic",
                 "elements": [{
                     "title": "Java",
-                    //"subtitle": "",
+                    "subtitle": "*****",
                     //"image_url": "https://www.royalcanin.com/~/media/Royal-Canin/Product-Categories/cat-adult-landing-hero.ashx",
                     /*"buttons": [{
                         "type": "web_url",
@@ -206,7 +206,7 @@ let messageSkills = {
                     }],*/
                 }, {
                     "title": "Python",
-                    //"subtitle": "2015 at The City Schools",
+                    "subtitle": "*****",
                     //"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
                     /*"buttons": [{
                         "type": "web_url",
@@ -215,7 +215,7 @@ let messageSkills = {
                     }],*/
                 }, {
                     "title": "Visual Basic .Net/6",
-                    //"subtitle": "2015 at The City Schools",
+                    "subtitle": "*****",
                     //"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
                     /*"buttons": [{
                         "type": "web_url",
