@@ -121,6 +121,18 @@ function sendGenericMessage(sender) {
                         "type": "postback",
                         "title": "Experience",
                         "payload": "Experience",
+                    }, {
+                        "type": "postback",
+                        "title": "Projects",
+                        "payload": "Projects",
+                    }, {
+                        "type": "postback",
+                        "title": "Achievements",
+                        "payload": "Achievements",
+                    }, {
+                        "type": "postback",
+                        "title": "Personal",
+                        "payload": "Personal"
                     }],
             }
         }
