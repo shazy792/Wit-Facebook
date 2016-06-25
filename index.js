@@ -164,9 +164,8 @@ let messageEducation = {
                 "template_type": "generic",
                 "elements": [{
                     "title": "Electrical Engineering",
-                    "subtitle": "Illinois Institute of Technology",
-                    "subtitle": "2019",
-                    //"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "subtitle": "2019 at Illinois Institute of Technology",
+                    "image_url": "https://www.royalcanin.com/~/media/Royal-Canin/Product-Categories/cat-adult-landing-hero.ashx",
                     "buttons": [{
                         "type": "web_url",
                         "url": "http://web.iit.edu/",
