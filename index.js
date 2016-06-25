@@ -164,12 +164,13 @@ let messageEducation = {
                 "template_type": "generic",
                 "elements": [{
                     "title": "Electrical Engineering",
-                    "subtitle": "2019 at Illinois Institute of Technology",
+                    "subtitle": "Illinois Institute of Technology",
+                    "subtitle": "2019",
                     //"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                     "buttons": [{
                         "type": "web_url",
                         "url": "http://web.iit.edu/",
-                        "title": "Illinois Institute of Technology"
+                        "title": "My University"
                     }, {
                         "type": "postback",
                         "title": "Postback",
@@ -182,7 +183,7 @@ let messageEducation = {
                     "buttons": [{
                         "type": "web_url",
                         "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/",
-                        "title": "The City School"
+                        "title": "My School"
                     }],
                 }]
             }
