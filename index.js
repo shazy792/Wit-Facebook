@@ -40,7 +40,7 @@ app.listen(app.get('port'), function() {
       if (event.message && event.message.text) {
         let text = event.message.text
         if (text == 'Yolo') {
-            sendGenericMessage(sender) // Call to Button Message.
+            sendGenericMessage(messageSuggestions, sender) // Call to Button Message.
             continue
         }
         //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -67,8 +67,17 @@ function postbackHandler(sender, token, postback){
 			//Card
 			sendCardMessage(messageEducation, sender)
 		case 'Skills':
+			//Button
+			sendGenericMessage(messageSkills, sender)
+		case 'PLangs':
 			//Card
 			sendCardMessage(messagePLangs, sender)
+		case 'HBoards':
+			//Card
+			sendCardMessage(message, sender)
+		case 'Database':
+			//Card
+			sendCardMessage(messageEducation, sender)
 		case 'Experience':
 			//Card
 		case 'Personal':
@@ -103,29 +112,7 @@ function sendTextMessage(sender, text) {
 }
 
 // Text with Buttons
-function sendGenericMessage(sender) {
-    let messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "button",
-                    "text": "What would you like to know about me?",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Education",
-                        "payload": "Education"
-                    }, {
-                        "type": "postback",
-                        "title": "Skills",
-                        "payload": "Skills",
-                    }, {
-                        "type": "postback",
-                        "title": "Experience",
-                        "payload": "Experience",
-                    }],
-            }
-        }
-    }
+function sendGenericMessage(messageData, sender) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
@@ -162,6 +149,29 @@ function sendCardMessage(messageData, sender) {
     })
 }
 
+let messageSuggestions = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "button",
+                    "text": "What would you like to know about me?",
+                    "buttons": [{
+                        "type": "postback",
+                        "title": "Education",
+                        "payload": "Education"
+                    }, {
+                        "type": "postback",
+                        "title": "Skills",
+                        "payload": "Skills",
+                    }, {
+                        "type": "postback",
+                        "title": "Experience",
+                        "payload": "Experience",
+                    }],
+            }
+        }
+    }
+
 let messageEducation = {
         "attachment": {
             "type": "template",
@@ -190,6 +200,29 @@ let messageEducation = {
         }
     }
 
+let messageSkills = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "button",
+                    "text": "What of my skills would you like to know?",
+                    "buttons": [{
+                        "type": "postback",
+                        "title": "Programming Languages",
+                        "payload": "PLangs"
+                    }, {
+                        "type": "postback",
+                        "title": "Hardware Boards",
+                        "payload": "HBoards",
+                    }, {
+                        "type": "postback",
+                        "title": "Database Engines",
+                        "payload": "Database",
+                    }],
+            }
+        }
+    }
+
 let messagePLangs = {
         "attachment": {
             "type": "template",
@@ -211,6 +244,42 @@ let messagePLangs = {
                     "title": "Android",
                     "image_url": "http://logok.org/wp-content/uploads/2014/06/Android-logo-wordmark.png",
                     "item_url": "https://en.wikipedia.org/wiki/Android_(operating_system)",
+                }]
+            }
+        }
+    }
+
+    let messageHBoards = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Arduino",
+                    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Arduino_Logo.svg/1280px-Arduino_Logo.svg.png",
+                   	"item_url": "https://www.arduino.cc/",
+                }, {
+                    "title": "Raspberry Pi",
+                    "image_url": "http://www.instructables.com/files/orig/FYC/48KX/IJ1TY4LH/FYC48KXIJ1TY4LH.png",
+                    "item_url": "https://www.raspberrypi.org/",
+                }, {
+                    "title": "ESP8266",
+                    "image_url": "http://visystem.ddns.net:7442/imagenes/esp8266.png",
+                    "item_url": "https://en.wikipedia.org/wiki/ESP8266",
+                }]
+            }
+        }
+    }
+
+    let messageDatabase = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Microsoft Access",
+                    "image_url": "http://www.accessrepairnrecovery.com/blog/wp-content/uploads/2015/07/Microsoft-Access-Course.jpg",
+                   	"item_url": "https://en.wikipedia.org/wiki/Microsoft_Access",
                 }]
             }
         }
