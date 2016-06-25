@@ -207,6 +207,10 @@ let messagePLangs = {
                     "title": "Visual Basic .Net/6",
                     "image_url": "https://regmedia.co.uk/2013/11/13/visual_studio.jpg?x=1200&y=794",
                     "item_url": "https://en.wikipedia.org/wiki/Visual_Basic_.NET",
+                },{
+                    "title": "Android",
+                    "image_url": "http://logok.org/wp-content/uploads/2014/06/Android-logo-wordmark.png",
+                    "item_url": "https://en.wikipedia.org/wiki/Android_(operating_system)",
                 }]
             }
         }
