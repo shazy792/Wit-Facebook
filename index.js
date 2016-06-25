@@ -66,23 +66,32 @@ function postbackHandler(sender, token, postback){
 		case 'Education':
 			//Card
 			sendCardMessage(messageEducation, sender)
+			break;
 		case 'Skills':
 			//Button
 			sendGenericMessage(messageSkills, sender)
+			break;
 		case 'Experience':
 			//Card
+			break;
 		case 'Personal':
 			//Card
+			break;
 		case 'Projects':
 			//Card
+			break;
 		case 'Achievements':
 			//Card
+			break;
 		case 'sx1':
-			//sendCardMessage(messagePLangs, sender)
+			sendCardMessage(messagePLangs, sender)
+			break;
 		case 'sx2':
-			//sendCardMessage(messageHBoards, sender)
+			sendCardMessage(messageHBoards, sender)
+			break;
 		case 'sx3':
-			//sendCardMessage(messageDatabase, sender)
+			senCardMessage(messageDatabase, sender)
+			break;
 
 	}
 
@@ -205,16 +214,16 @@ let messageSkills = {
                     "text": "What of my skills would you like to know?",
                     "buttons": [{
                         "type": "postback",
-                        "title": "Programming Languages",
-                        "payload": "1"
+                        "title": "Programming languages",
+                        "payload": "sx1"
                     }, {
                         "type": "postback",
                         "title": "Hardware Boards",
-                        "payload": "2",
+                        "payload": "sx2",
                     }, {
                         "type": "postback",
                         "title": "Database Engines",
-                        "payload": "3",
+                        "payload": "sx3",
                     }],
             }
         }
