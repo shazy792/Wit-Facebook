@@ -78,11 +78,11 @@ function postbackHandler(sender, token, postback){
 		case 'Achievements':
 			//Card
 		case 'sx1':
-			sendCardMessage(messagePLangs, sender)
+			//sendCardMessage(messagePLangs, sender)
 		case 'sx2':
-			sendCardMessage(messageHBoards, sender)
+			//sendCardMessage(messageHBoards, sender)
 		case 'sx3':
-			sendCardMessage(messageDatabase, sender)
+			//sendCardMessage(messageDatabase, sender)
 
 	}
 
