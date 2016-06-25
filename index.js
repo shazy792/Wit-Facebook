@@ -181,8 +181,8 @@ let messageEducation = {
                     //"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
                     "buttons": [{
                         "type": "web_url",
-                        "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/"
-                        "title": "The City School",
+                        "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/",
+                        "title": "The City School"
                     }],
                 }]
             }
