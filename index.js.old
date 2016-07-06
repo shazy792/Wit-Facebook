@@ -1,0 +1,168 @@
+//Yo
+'use strict';
+
+const express = require('express')
+const bodyParser = require('body-parser')
+const request = require('request')
+const app = express()
+
+app.set('port', (process.env.PORT || 5000))
+
+// Process application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: false}))
+
+// Process application/json
+app.use(bodyParser.json())
+
+// Index route
+app.get('/', function (req, res) {
+    res.send('Hello world, I am a chat bot')
+})
+
+// for Facebook verification
+app.get('/webhook/', function (req, res) {
+    if (req.query['hub.verify_token'] === 'shazy792resumebot') {
+        res.send(req.query['hub.challenge'])
+    }
+    res.send('Error, wrong token')
+})
+
+// Spin up the server
+app.listen(app.get('port'), function() {
+    console.log('running on port', app.get('port'))
+})
+
+ // Webhook Postaback
+ app.post('/webhook/', function (req, res) {
+    let messaging_events = req.body.entry[0].messaging
+    for (let i = 0; i < messaging_events.length; i++) {
+      let event = req.body.entry[0].messaging[i]
+      let sender = event.sender.id
+      if (event.message && event.message.text) {
+        //let text = event.message.text
+        //if (text == 'Yolo') {
+            sendButtonMessage(messageSuggestions, sender) // Call to Button Message.
+            continue
+        //}
+        //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+      }
+      if (event.postback) {
+        // No need to stringify since getting payload by JSON!
+        //let text = JSON.stringify(event.postback)
+        //sendTextMessage(sender, "Recieved Post Back Call Payload= "+text["payload"]+event.postback["payload"], token)
+        //sendTextMessage(sender, "Recieved Post Back Call Payload= "+event.postback["payload"], token);
+        postbackHandler(sender, token, event.postback)
+        continue
+      }
+    }
+    res.sendStatus(200)
+  })
+
+const token = process.env.FB_PAGE_TOKEN;
+
+//Function to Handle Postback Calls
+function postbackHandler(sender, token, postback){
+	console.log(postback["payload"])
+	switch (postback["payload"]){
+		case 'Education':
+			//Card
+			sendCardMessage(messageEducation, sender)
+			break;
+		case 'Skills':
+			//Button
+			sendButtonMessage(messageSkills, sender)
+			break;
+		case 'sx1':
+			sendCardMessage(messagePLangs, sender)
+			break;
+		case 'sx2':
+			sendCardMessage(messageHBoards, sender)
+			break;
+		case 'sx3':
+			sendCardMessage(messageDatabase, sender)
+			break;
+		case 'Experience':
+			//Card
+			break;
+		case 'Personal':
+			//Card
+			break;
+		case 'Projects':
+			//Card
+			break;
+		case 'Achievements':
+			//Card
+			break;
+	}
+
+}
+
+// Function to Handle user Questions, Relies on WIT
+function questionHandler(question){
+	switch(question){
+		case '':
+		break;
+		default:
+			sendTextMessage(sender,"I am sorry but I don't know anything about " + question + ", Please contact Shahzil for more information");
+		break;
+	}
+}
+
+// Text Message
+function sendTextMessage(sender, text) {
+    let messageData = { text:text }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+// Text with Buttons
+function sendButtonMessage(messageData, sender) {
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+// Card Message
+function sendCardMessage(messageData, sender) {
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+

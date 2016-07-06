@@ -1,292 +1,187 @@
 'use strict';
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const request = require('request')
-const app = express()
+// Messenger API integration example
+// We assume you have:
+// * a Wit.ai bot setup (https://wit.ai/docs/quickstart)
+// * a Messenger Platform setup (https://developers.facebook.com/docs/messenger-platform/quickstart)
+// You need to `npm install` the following dependencies: body-parser, express, request.
+//
+const bodyParser = require('body-parser');
+const express = require('express');
 
-app.set('port', (process.env.PORT || 5000))
+// get Bot, const, and Facebook API
+const bot = require('./bot.js');
+const Config = require('./const.js');
+const FB = require('./facebook.js');
+const Dat = require('./data.js');
 
-// Process application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended: false}))
+// Setting up our bot
+const wit = bot.getWit();
 
-// Process application/json
-app.use(bodyParser.json())
+// Webserver parameter
+const PORT = process.env.PORT || 8445;
 
-// Index route
-app.get('/', function (req, res) {
-    res.send('Hello world, I am a chat bot')
-})
+// Wit.ai bot specific code
 
-// for Facebook verification
-app.get('/webhook/', function (req, res) {
-    if (req.query['hub.verify_token'] === 'shazy792resumebot') {
-        res.send(req.query['hub.challenge'])
+// This will contain all user sessions.
+// Each session has an entry:
+// sessionId -> {fbid: facebookUserId, context: sessionState}
+const sessions = {};
+
+const findOrCreateSession = (fbid) => {
+  let sessionId;
+  // Let's see if we already have a session for the user fbid
+  Object.keys(sessions).forEach(k => {
+    if (sessions[k].fbid === fbid) {
+      // Yep, got it!
+      sessionId = k;
     }
-    res.send('Error, wrong token')
-})
-
-// Spin up the server
-app.listen(app.get('port'), function() {
-    console.log('running on port', app.get('port'))
-})
-
- // Webhook Postaback
- app.post('/webhook/', function (req, res) {
-    let messaging_events = req.body.entry[0].messaging
-    for (let i = 0; i < messaging_events.length; i++) {
-      let event = req.body.entry[0].messaging[i]
-      let sender = event.sender.id
-      if (event.message && event.message.text) {
-        //let text = event.message.text
-        //if (text == 'Yolo') {
-            sendButtonMessage(messageSuggestions, sender) // Call to Button Message.
-            continue
-        //}
-        //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+  });
+  if (!sessionId) {
+    // No session found for user fbid, let's create a new one
+    sessionId = new Date().toISOString();
+    sessions[sessionId] = {
+      fbid: fbid,
+      context: {
+        _fbid_: fbid
       }
-      if (event.postback) {
-        // No need to stringify since getting payload by JSON!
-        //let text = JSON.stringify(event.postback)
-        //sendTextMessage(sender, "Recieved Post Back Call Payload= "+text["payload"]+event.postback["payload"], token)
-        //sendTextMessage(sender, "Recieved Post Back Call Payload= "+event.postback["payload"], token);
-        postbackHandler(sender, token, event.postback)
-        continue
-      }
+    }; // set context, _fid_
+  }
+  return sessionId;
+};
+
+// Starting our webserver and putting it all together
+const app = express();
+app.set('port', PORT);
+app.listen(app.get('port'));
+app.use(bodyParser.json());
+console.log("I'm wating for you @" + PORT);
+
+// index. Let's say something fun
+app.get('/', function(req, res) {
+  res.send('"Only those who will risk going too far can possibly find out how far one can go." - T.S. Eliot');
+});
+
+// Webhook verify setup using FB_VERIFY_TOKEN
+app.get('/webhook', (req, res) => {
+  if (!Config.FB_VERIFY_TOKEN) {
+    throw new Error('missing FB_VERIFY_TOKEN');
+  }
+  if (req.query['hub.mode'] === 'subscribe' &&
+    req.query['hub.verify_token'] === Config.FB_VERIFY_TOKEN) {
+    res.send(req.query['hub.challenge']);
+  } else {
+    res.sendStatus(400);
+  }
+});
+
+// The main message handler
+app.post('/webhook', (req, res) => {
+  // Parsing the Messenger API response
+  const messaging = FB.getFirstMessagingEntry(req.body);
+  if (messaging && messaging.message) {
+
+    // Yay! We got a new message!
+
+    // We retrieve the Facebook user ID of the sender
+    const sender = messaging.sender.id;
+
+    // We retrieve the user's current session, or create one if it doesn't exist
+    // This is needed for our bot to figure out the conversation history
+    const sessionId = findOrCreateSession(sender);
+
+    // We retrieve the message content
+    const msg = messaging.message.text;
+    const atts = messaging.message.attachments;
+
+    if (atts) {
+      // We received an attachment
+
+      // Let's reply with an automatic message
+      FB.fbMessage(
+        sender,
+        'Sorry I can only process text messages for now.'
+      );
+    } else if (msg) {
+      // We received a text message
+
+      // Let's forward the message to the Wit.ai Bot Engine
+      // This will run all actions until our bot has nothing left to do
+      wit.runActions(
+        sessionId, // the user's current session
+        msg, // the user's message 
+        sessions[sessionId].context, // the user's current session state
+        (error, context) => {
+          if (error) {
+            console.log('Oops! Got an error from Wit:', error);
+          } else {
+            // Our bot did everything it has to do.
+            // Now it's waiting for further messages to proceed.
+            console.log('Waiting for futher messages.');
+
+            // Based on the session state, you might want to reset the session.
+            // This depends heavily on the business logic of your bot.
+            // Example:
+            // if (context['done']) {
+            //   delete sessions[sessionId];
+            // }
+
+            // Updating the user's current session state
+            sessions[sessionId].context = context;
+          }
+        }
+      );
     }
-    res.sendStatus(200)
-  })
+  }
+  res.sendStatus(200);
+});
 
-const token = process.env.FB_PAGE_TOKEN;
-
-//Function to Handle Postback Calls
 function postbackHandler(sender, token, postback){
-	console.log(postback["payload"])
-	switch (postback["payload"]){
-		case 'Education':
-			//Card
-			sendCardMessage(messageEducation, sender)
-			break;
-		case 'Skills':
-			//Button
-			sendButtonMessage(messageSkills, sender)
-			break;
-		case 'sx1':
-			sendCardMessage(messagePLangs, sender)
-			break;
-		case 'sx2':
-			sendCardMessage(messageHBoards, sender)
-			break;
-		case 'sx3':
-			sendCardMessage(messageDatabase, sender)
-			break;
-		case 'Experience':
-			//Card
-			break;
-		case 'Personal':
-			//Card
-			break;
-		case 'Projects':
-			//Card
-			break;
-		case 'Achievements':
-			//Card
-			break;
-	}
+  console.log(postback["payload"])
+  switch (postback["payload"]){
+    case 'Education':
+      //Card
+      sendCardMessage(messageEducation, sender)
+      break;
+    case 'Skills':
+      //Button
+      sendButtonMessage(messageSkills, sender)
+      break;
+    case 'sx1':
+      sendCardMessage(messagePLangs, sender)
+      break;
+    case 'sx2':
+      sendCardMessage(messageHBoards, sender)
+      break;
+    case 'sx3':
+      sendCardMessage(messageDatabase, sender)
+      break;
+    case 'Experience':
+      //Card
+      break;
+    case 'Personal':
+      //Card
+      break;
+    case 'Projects':
+      //Card
+      break;
+    case 'Achievements':
+      //Card
+      break;
+  }
 
 }
 
-// Text Message
-function sendTextMessage(sender, text) {
-    let messageData = { text:text }
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
+// Function to Handle user Questions, Relies on WIT
+function questionHandler(question){
+  switch(question){
+    case '':
+    break;
+    default:
+      //sendTextMessage(sender,"I am sorry but I don't know anything about " + question + ", Please contact Shahzil for more information");
+      FB.sendCardMessage(Dat.messageEducation,sender);
+    break;
+  }
 }
 
-// Text with Buttons
-function sendButtonMessage(messageData, sender) {
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
-}
-
-// Card Message
-function sendCardMessage(messageData, sender) {
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
-}
-
-let messageSuggestions = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "button",
-                    "text": "What would you like to know about me?",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Education",
-                        "payload": "Education"
-                    }, {
-                        "type": "postback",
-                        "title": "Skills",
-                        "payload": "Skills",
-                    }, {
-                        "type": "postback",
-                        "title": "Experience",
-                        "payload": "Experience",
-                    }],
-            }
-        }
-    }
-
-let messageEducation = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Electrical Engineering",
-                    "subtitle": "2019 at Illinois Institute of Technology",
-                    //"image_url": "https://www.royalcanin.com/~/media/Royal-Canin/Product-Categories/cat-adult-landing-hero.ashx",
-                    "buttons": [{
-                        "type": "web_url",
-                        "url": "http://web.iit.edu/",
-                        "title": "My University"
-                    }],
-                }, {
-                    "title": "A Levels",
-                    "subtitle": "2015 at The City Schools",
-                    //"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
-                    "buttons": [{
-                        "type": "web_url",
-                        "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/",
-                        "title": "My School",
-                    }],
-                }]
-            }
-        }
-    }
-
-let messageSkills = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "button",
-                    "text": "What of my skills would you like to know?",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Programming languages",
-                        "payload": "sx1"
-                    }, {
-                        "type": "postback",
-                        "title": "Hardware Boards",
-                        "payload": "sx2",
-                    }, {
-                        "type": "postback",
-                        "title": "Database Engines",
-                        "payload": "sx3",
-                    }],
-            }
-        }
-    }
-
-let messagePLangs = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Java",
-                    "image_url": "http://www.greycampus.com/system/courses/JAVA.jpg",
-                   	"item_url": "https://en.wikipedia.org/wiki/Java_(programming_language)",
-                }, {
-                    "title": "Python",
-                    "image_url": "https://realpython.com/learn/python-first-steps/images/pythonlogo.jpg",
-                    "item_url": "https://en.wikipedia.org/wiki/Python_(programming_language)",
-                }, {
-                    "title": "Visual Basic .Net/6",
-                    "image_url": "https://regmedia.co.uk/2013/11/13/visual_studio.jpg?x=1200&y=794",
-                    "item_url": "https://en.wikipedia.org/wiki/Visual_Basic_.NET",
-                },{
-                    "title": "Android",
-                    "image_url": "http://logok.org/wp-content/uploads/2014/06/Android-logo-wordmark.png",
-                    "item_url": "https://en.wikipedia.org/wiki/Android_(operating_system)",
-                }]
-            }
-        }
-    }
-
-    let messageHBoards = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Arduino",
-                    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Arduino_Logo.svg/1280px-Arduino_Logo.svg.png",
-                   	"item_url": "https://www.arduino.cc/",
-                }, {
-                    "title": "Raspberry Pi",
-                    "image_url": "http://www.instructables.com/files/orig/FYC/48KX/IJ1TY4LH/FYC48KXIJ1TY4LH.png",
-                    "item_url": "https://www.raspberrypi.org/",
-                }, {
-                    "title": "ESP8266",
-                    "image_url": "http://visystem.ddns.net:7442/imagenes/esp8266.png",
-                    "item_url": "https://en.wikipedia.org/wiki/ESP8266",
-                }]
-            }
-        }
-    }
-
-    let messageDatabase = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Microsoft Access",
-                    "image_url": "http://www.accessrepairnrecovery.com/blog/wp-content/uploads/2015/07/Microsoft-Access-Course.jpg",
-                   	"item_url": "https://en.wikipedia.org/wiki/Microsoft_Access",
-                }]
-            }
-        }
-    }
-
+// Put in Facebook.js and call using FB.

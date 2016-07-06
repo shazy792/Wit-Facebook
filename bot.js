@@ -5,6 +5,7 @@
 const Wit = require('node-wit').Wit;
 const FB = require('./facebook.js');
 const Config = require('./const.js');
+const Ind = require('./index.js');
 
 const firstEntityValue = (entities, entity) => {
   const val = entities && entities[entity] &&
@@ -67,8 +68,17 @@ const actions = {
     console.log(error.message);
   },
 
+  //Bot Executions
+  function userQuestion(sessionId, context, cb){
+
+    Ind.questionHandler(question=context.question);
+
+    cb(context);
+
+  },
+
   // Bot Executions
-  ['getName'](sessionId, context, cb) {
+  /*['getName'](sessionId, context, cb) {
     // Here should go the api call, e.g.:
     // context.forecast = apiCall(context.loc)
     if (context.intiation) {
@@ -76,34 +86,34 @@ const actions = {
     }
     
     cb(context);
-  },
+  },*/
 
-  ['getAnswer'](sessionId, context, cb) {
-    // Here should go the api call, e.g.:
-    // context.forecast = apiCall(context.loc)
-    console.log(context.question)
+  // ['getAnswer'](sessionId, context, cb) {
+  //   // Here should go the api call, e.g.:
+  //   // context.forecast = apiCall(context.loc)
+  //   console.log(context.question)
 
-    if (context.question == "school"){
-      context.answer  = 'I am currently a 2019 canditate for Bachelors in\
-         Electrical Engineering at the Illinois Institute of Technology'
-    } else if (context.question == "work"){
-      context.answer = 'Currently I am working as a Student Assistant at the\
-         Student Employement Office at the Illionois Institute of Technology. From 2012 to 2015 I have Interned at KeySports Pvt Ltd\
-         and in the Summer of 2014 I Interned at the Standard Chartered Bank'
-      } else if (context.question == "skills"){
-         context.answer = 'I currently program in Java, Python, Visual Basic and Arduino\
-        I am also comfortabble with various electroinc boards including Arduino, Raspberry Pi and ESP8266'
-       } else if (context.question == "projects"){
-        context.answer = 'I have developed a Home Automation System as a Hobby Project.\
-        I also have built robots for my classes and am currently pursuing a Robotic Arm project with IEEE'
-       } else if (context.question == "question"){
-        context.answer = 'You can contact me at shazy792@gmail.com'
-      } else{
-        context.answer = 'Sorry I do not understand please contact Shahzil at shazy792@gmail.com for further details.'
-      }
+  //   if (context.question == "school"){
+  //     context.answer  = 'I am currently a 2019 canditate for Bachelors in\
+  //        Electrical Engineering at the Illinois Institute of Technology'
+  //   } else if (context.question == "work"){
+  //     context.answer = 'Currently I am working as a Student Assistant at the\
+  //        Student Employement Office at the Illionois Institute of Technology. From 2012 to 2015 I have Interned at KeySports Pvt Ltd\
+  //        and in the Summer of 2014 I Interned at the Standard Chartered Bank'
+  //     } else if (context.question == "skills"){
+  //        context.answer = 'I currently program in Java, Python, Visual Basic and Arduino\
+  //       I am also comfortabble with various electroinc boards including Arduino, Raspberry Pi and ESP8266'
+  //      } else if (context.question == "projects"){
+  //       context.answer = 'I have developed a Home Automation System as a Hobby Project.\
+  //       I also have built robots for my classes and am currently pursuing a Robotic Arm project with IEEE'
+  //      } else if (context.question == "question"){
+  //       context.answer = 'You can contact me at shazy792@gmail.com'
+  //     } else{
+  //       context.answer = 'Sorry I do not understand please contact Shahzil at shazy792@gmail.com for further details.'
+  //     }
 
-    cb(context);
-  },
+  //   cb(context);
+  // },
 };
 
 
