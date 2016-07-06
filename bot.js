@@ -77,7 +77,9 @@ const actions = {
     break;
     default:
       //sendTextMessage(sender,"I am sorry but I don't know anything about " + question + ", Please contact Shahzil for more information");
-      FB.sendCardMessage(Dat.messageEducation,sender);
+      context.answer = Dat.messageEducation;
+      console.log('Send card Message!');
+      FB.sendCardMessage(Dat.messageEducation, sender);
     break;
   }
     
