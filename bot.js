@@ -5,7 +5,6 @@
 const Wit = require('node-wit').Wit;
 const FB = require('./facebook.js');
 const Config = require('./const.js');
-const Ind = require('./index.js');
 
 const firstEntityValue = (entities, entity) => {
   const val = entities && entities[entity] &&
@@ -73,7 +72,14 @@ const actions = {
   ['getAnswer'](sessionId, context, cb) {
     // Here should go the api call, e.g.:
     // context.forecast = apiCall(context.loc)
-    Ind.questionHandler(question=context.question);
+    switch(context.question){
+    case '':
+    break;
+    default:
+      //sendTextMessage(sender,"I am sorry but I don't know anything about " + question + ", Please contact Shahzil for more information");
+      FB.sendCardMessage(Dat.messageEducation,sender);
+    break;
+  }
     
     cb(context);
   },
