@@ -72,7 +72,7 @@ const actions = {
   ['getAnswer'](sessionId, context, cb) {
     // Here should go the api call, e.g.:
     // context.forecast = apiCall(context.loc)
-    switch(context.question){
+    /*switch(context.question){
     case '':
     break;
     default:
@@ -81,8 +81,9 @@ const actions = {
       console.log('Send card Message!');
       FB.sendCardMessage(Dat.messageEducation, sender);
     break;
-  }
+    }*/
     
+    context.answer = Dat.messageEducation;
     cb(context);
   },
 
