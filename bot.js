@@ -69,24 +69,14 @@ const actions = {
   },
 
   //Bot Executions
-  function userQuestion(sessionId, context, cb){
-
-    Ind.questionHandler(question=context.question);
-
-    cb(context);
-
-  },
-
   // Bot Executions
-  /*['getName'](sessionId, context, cb) {
+  ['getAnswer'](sessionId, context, cb) {
     // Here should go the api call, e.g.:
     // context.forecast = apiCall(context.loc)
-    if (context.intiation) {
-      context.name = 'Shahzil Sheikh';
-    }
+    Ind.questionHandler(question=context.question);
     
     cb(context);
-  },*/
+  },
 
   // ['getAnswer'](sessionId, context, cb) {
   //   // Here should go the api call, e.g.:
