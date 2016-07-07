@@ -70,53 +70,41 @@ const actions = {
     console.log(error.message);
   },
 
-  //Bot Executions
-  // Bot Executions
-  ['getAnswer'](sessionId, context, cb) {
-    context.answer = Dat.messageEducation;
+  getAnswer(context,cb){
+
+    let messageEducation = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Electrical Engineering",
+                    "subtitle": "2019 at Illinois Institute of Technology",
+                    //"image_url": "https://www.royalcanin.com/~/media/Royal-Canin/Product-Categories/cat-adult-landing-hero.ashx",
+                    "buttons": [{
+                        "type": "web_url",
+                        "url": "http://web.iit.edu/",
+                        "title": "My University"
+                    }],
+                }, {
+                    "title": "A Levels",
+                    "subtitle": "2015 at The City Schools",
+                    //"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "buttons": [{
+                        "type": "web_url",
+                        "url": "http://thecityschool.edu.pk/category/central-region/iqbal-campus-sialkot/",
+                        "title": "My School",
+                    }],
+                }]
+            }
+        }
+    }
+
+    context.answer = messageEducation;
+
     cb(context);
+  }
 
-    // Here should go the api call, e.g.:
-    // context.forecast = apiCall(context.loc)
-    /*switch(context.question){
-    case '':
-    break;
-    default:
-      //sendTextMessage(sender,"I am sorry but I don't know anything about " + question + ", Please contact Shahzil for more information");
-      context.answer = Dat.messageEducation;
-      console.log('Send card Message!');
-      FB.sendCardMessage(Dat.messageEducation, sender);
-    break;
-    }*/
-    
-  },
-
-  // ['getAnswer'](sessionId, context, cb) {
-  //   // Here should go the api call, e.g.:
-  //   // context.forecast = apiCall(context.loc)
-  //   console.log(context.question)
-
-  //   if (context.question == "school"){
-  //     context.answer  = 'I am currently a 2019 canditate for Bachelors in\
-  //        Electrical Engineering at the Illinois Institute of Technology'
-  //   } else if (context.question == "work"){
-  //     context.answer = 'Currently I am working as a Student Assistant at the\
-  //        Student Employement Office at the Illionois Institute of Technology. From 2012 to 2015 I have Interned at KeySports Pvt Ltd\
-  //        and in the Summer of 2014 I Interned at the Standard Chartered Bank'
-  //     } else if (context.question == "skills"){
-  //        context.answer = 'I currently program in Java, Python, Visual Basic and Arduino\
-  //       I am also comfortabble with various electroinc boards including Arduino, Raspberry Pi and ESP8266'
-  //      } else if (context.question == "projects"){
-  //       context.answer = 'I have developed a Home Automation System as a Hobby Project.\
-  //       I also have built robots for my classes and am currently pursuing a Robotic Arm project with IEEE'
-  //      } else if (context.question == "question"){
-  //       context.answer = 'You can contact me at shazy792@gmail.com'
-  //     } else{
-  //       context.answer = 'Sorry I do not understand please contact Shahzil at shazy792@gmail.com for further details.'
-  //     }
-
-  //   cb(context);
-  // },
 };
 
 

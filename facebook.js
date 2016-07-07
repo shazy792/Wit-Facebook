@@ -77,7 +77,7 @@ function sendButtonMessage(messageData, sender) {
 }
 
 // Card Message
-function sendCardMessage(messageData, sender) {
+function sendCardMessage(sender, messageData) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
