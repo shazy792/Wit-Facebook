@@ -136,3 +136,10 @@ let messagePLangs = {
         }
     }
 
+module.exports = {
+  messageDatabase: messageDatabase,
+  messageHBoards: messageHBoards,
+  messagePLangs: messagePLangs,
+  messageSkills: messageSkills,
+  messageEducation: messageEducation,
+};

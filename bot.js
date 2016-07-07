@@ -54,6 +54,7 @@ const actions = {
       cb();
     }
   },
+  
   merge(sessionId, context, entities, message, cb) {
     // Retrieve the entities and store it into a context field
     const ques = firstEntityValue(entities, 'question');
@@ -71,6 +72,9 @@ const actions = {
   //Bot Executions
   // Bot Executions
   ['getAnswer'](sessionId, context, cb) {
+    context.answer = Dat.messageEducation;
+    cb(context);
+
     // Here should go the api call, e.g.:
     // context.forecast = apiCall(context.loc)
     /*switch(context.question){
@@ -84,8 +88,6 @@ const actions = {
     break;
     }*/
     
-    context.answer = Dat.messageEducation;
-    cb(context);
   },
 
   // ['getAnswer'](sessionId, context, cb) {
